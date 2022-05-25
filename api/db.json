@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "name": "Team A",
+      "score": 197,
+      "id": 1
+    },
+    {
+      "name": "Team B",
+      "score": 490,
+      "id": 2
+    },
+    {
+      "name": "Hello",
+      "score": 150,
+      "id": 3
+    }
+  ]
+}
