@@ -2,7 +2,9 @@ import TeamList from "./components/TeamList";
 import React, { useState } from "react";
 import AddTeam from "./components/AddTeam";
 import { useEffect } from 'react';
-
+var a;
+var b;
+var f=0;
 function App() {
   const teams = [];
 
@@ -10,19 +12,23 @@ function App() {
   const [name,setName]=useState(null);
   const [score,setScore]=useState(0);
   const[id,setId]=useState(null)
-
+  
   useEffect(()=>{
     getUsers();
   },[])
 
   function getUsers()
   {
-    fetch("http://localhost:3000/users").then((result)=>{
+    fetch("https://score-board-main.herokuapp.com/scoreboard").then((result)=>{
       result.json().then((resp)=>{
-        setTeamList(resp)
-        setName(resp[0].name)
-        setScore(resp[0].score)
-        setId(resp[0].id)
+        // console.log(resp.score[0]._id);
+        setTeamList(resp.score)
+        setName(resp.score[0].name)
+        // console.log(resp[0].name);
+        setScore(resp.score[0].score)
+        setId(resp.score[0]._id)
+        // console.log(id)
+        a=resp.score[0]._id;
       })
     })
   }
@@ -54,15 +60,19 @@ function App() {
 
   const incrementQuantity = (index) => {
     let newTeamList = [...teamList];
-    newTeamList[index].score+=10;
+    newTeamList[index].score+=1;
+    b=teamList[index]._id;
+    setId(teamList[index]._id)
     setTeamList(newTeamList);
   };
 
   const decrementQuantity = (index) => {
     let newTeamList = [...teamList];
     if (newTeamList[index].score > 0) {
-      newTeamList[index].score-=10;
+      newTeamList[index].score-=1;
     }
+    b=teamList[index]._id;
+    setId(teamList[index]._id)
     setTeamList(newTeamList);
   };
 
@@ -70,15 +80,27 @@ function App() {
     // newTeamList.splice(index, 1);
     setName(teamList[index].name)
     setScore(teamList[index].score)
-    setId(teamList[index].id)
+    setId(teamList[index]._id)
+    // console.log(id);
+    b=teamList[index]._id;
+    // console.log(b)
+    a=teamList[index]._id;
   };
 
-  function updateUser()
-  {
-    let item={name,score,id}
+  const updateUser=(name,score,index,f) =>{
+    // console.log(b)
+    if(f==1)
+    {b=teamList[index]._id;}
+      console.log(f);
+    console.log(b)
+    let item={name,score,b}
+    // console.log(id)
+    // console.log(b)
+    // console.log(a)
+    // console.log(index)
     console.warn("item",item)
-    fetch(`http://localhost:3000/users/${id}`,{
-      method:'PUT',
+    fetch(`https://score-board-main.herokuapp.com/scoreboard/${b}`,{
+      method:'PATCH',
       headers:{
         'Accept':'application/json',
         'Content-Type':'application/json'
@@ -97,7 +119,7 @@ function App() {
     setScore(score);
     console.warn({name,score})
       let data={name,score}
-      fetch("http://localhost:3000/users",{
+      fetch("https://score-board-main.herokuapp.com/scoreboard",{
         method:'POST',
         headers:{
           'Accept':'application/json',
@@ -120,9 +142,10 @@ function App() {
           incrementQuantity={incrementQuantity}
           decrementQuantity={decrementQuantity}
           selectUser={selectUser}
+          updateUser={updateUser}
         />
         <div className="App">
-          <button className="btn btn-primary" onClick={()=>updateUser()}>
+          <button className="btn btn-primary" onClick={()=>updateUser(name,score,b,0)}>
           Submit
           </button>
         </div>

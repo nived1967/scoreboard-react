@@ -12,6 +12,7 @@ export default function TeamList(props) {
         incrementQuantity={props.incrementQuantity}
         decrementQuantity={props.decrementQuantity}
         selectUser={props.selectUser}
+        updateUser={props.updateUser}
         index={i}
       />
     )

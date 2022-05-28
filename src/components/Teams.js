@@ -10,6 +10,14 @@ export default function Teams(props) {
           <span className="badge bg-secondary">{props.team.score}</span>
         </h2>
       </div>
+      <div className="row g-3 align-items-center">
+      <div className="col-auto mb-3">
+        <input type="text" id="inputScore" className="form-control" aria-describedby="score" onChange={(e) =>{
+                props.updateUser(props.team.name, e.currentTarget.value, props.index,1);
+                // console.log(props.index)
+            }} value={props.team.score}/>
+      </div>
+      </div>
       <div className="col-3">
         <div
           className="btn-group"

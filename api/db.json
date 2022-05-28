@@ -2,7 +2,7 @@
   "users": [
     {
       "name": "Team A",
-      "score": 237,
+      "score": 277,
       "id": 1
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "Hello",
-      "score": 150,
+      "score": 200,
       "id": 3
     }
   ]
